@@ -1,0 +1,8 @@
+package com.post.comment.example.Model;
+
+public record Post (
+    int userId,
+    int id,
+    String title,
+    String body
+){}
