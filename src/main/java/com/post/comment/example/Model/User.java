@@ -1,12 +1,25 @@
 package com.post.comment.example.Model;
 
-public record User (
-    Integer id,
-    String name,
-    String username,
-    String email,
-    Address address,
-    String phone,
-    String website,
-    Company company
-){}
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+
+@Entity
+public class User {
+    @Id
+    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    String name;
+    String username;
+    String email;
+
+    @ManyToOne(optional = true)
+    @JoinColumn(nullable = true, name = "addressId")
+    Address address;
+    String phone;
+    String website;
+
+    @ManyToOne(optional = true)
+    @JoinColumn(nullable = true, name = "companyId")
+    Company company;
+}

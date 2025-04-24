@@ -1,7 +1,13 @@
 package com.post.comment.example.Model;
 
-public record Company (
-    String name,
-    String catchPhrase,
-    String bs
-){}
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
+public class Company {
+    @Id
+    Long id;
+    String name;
+    String catchPhrase;
+    String bs;
+}
