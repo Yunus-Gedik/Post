@@ -9,7 +9,6 @@ public class Comment {
     @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    Integer postId;
     String body;
     String name;
     String email;
