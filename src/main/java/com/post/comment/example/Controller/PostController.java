@@ -1,10 +1,16 @@
 package com.post.comment.example.Controller;
 
 import com.post.comment.example.Model.Comment;
+import com.post.comment.example.Model.CommentOptional;
 import com.post.comment.example.Model.Post;
+import com.post.comment.example.Model.PostOptional;
 import com.post.comment.example.Repository.CommentRepository;
 import com.post.comment.example.Repository.PostRepository;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +20,10 @@ import java.util.Optional;
 class PostController {
     private final PostRepository postRepo;
     private final CommentRepository commentRepo;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
     PostController(PostRepository repo, CommentRepository commentRepo) {
         this.postRepo = repo;
         this.commentRepo = commentRepo;
@@ -47,16 +57,33 @@ class PostController {
 
     @PostMapping("/post")
     public Post sharePost(@RequestBody Post post) {
-        return null;
+        return this.postRepo.save(post);
+    }
+
+    @PostMapping("/comment")
+    public Comment shareComment(@RequestBody Comment comment) {
+        return this.commentRepo.save(comment);
     }
 
     @PatchMapping("/post/{id}")
-    public Post updatePost(@PathVariable(value = "id") int postId, @RequestBody Post post) {
-        return null;
+    public Post updatePost(@PathVariable(value = "id") Long postId, @RequestBody PostOptional post) {
+        Post p = this.postRepo.findById(postId).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found")
+        );
+
+        modelMapper.map(post, p);
+        this.postRepo.save(p);
+        return p;
     }
 
     @PatchMapping("/comment/{id}")
-    public Post updateComment(@PathVariable(value = "id") int commentId, @RequestBody Post post) {
+    public Comment updateComment(@PathVariable(value = "id") Long commentId, @RequestBody CommentOptional comment) {
+        Comment c = this.commentRepo.findById(commentId).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment not found")
+        );
+
+        modelMapper.map(comment, c);
+        this.commentRepo.save(c);
         return null;
     }
 
