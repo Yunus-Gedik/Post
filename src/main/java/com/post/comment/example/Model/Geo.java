@@ -1,17 +1,10 @@
 package com.post.comment.example.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
-@Entity
+@Embeddable
 public class Geo {
-    @Id
-    @NotNull
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
     String lat;
     String lng;
 }

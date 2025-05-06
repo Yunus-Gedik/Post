@@ -14,7 +14,6 @@ public class Address {
     String city;
     String zipcode;
 
-    @ManyToOne(optional = true)
-    @JoinColumn(nullable = true, name = "geoId")
+    @Embedded
     Geo geo;
 }

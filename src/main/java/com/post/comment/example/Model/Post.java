@@ -20,6 +20,5 @@ public class Post {
 
     @NotEmpty
     String title;
-    @NotEmpty
     String body;
 }

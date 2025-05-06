@@ -1,8 +1,6 @@
 package com.post.comment.example.Model;
 
-import jakarta.validation.constraints.NotEmpty;
-
-public class PostOptional {
+public class PostDTO {
     User user;
     String title;
     String body;

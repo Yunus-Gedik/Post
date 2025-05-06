@@ -1,9 +1,7 @@
 package com.post.comment.example.Model;
 
-import jakarta.persistence.*;
 
-
-public class CommentOptional {
+public class CommentDTO {
     String body;
     String name;
     String email;
