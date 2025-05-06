@@ -13,7 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Optional;
 
-@RequestMapping("/api")
+@RequestMapping("/api/post")
 @RestController
 class PostController {
     private final PostRepository postRepo;
@@ -25,29 +25,29 @@ class PostController {
         postRepo = repo;
     }
 
-    @GetMapping("/posts")
+    @GetMapping("/all")
     public List<Post> getPosts(@RequestParam(value = "of", required = false) Long userId) {
         return postRepo.findByUserId(userId);
     }
 
-    @GetMapping("/post")
+    @GetMapping("")
     public Optional<Post> getPostByRequestParam(@RequestParam(value = "id") Long postId) {
         return postRepo.findById(postId);
     }
 
-    @GetMapping("/post/{id}")
+    @GetMapping("/{id}")
     public Optional<Post> getPost(@PathVariable(value = "id", required = true) long postId) {
         return postRepo.findById(postId);
     }
 
-    @PostMapping("/post")
+    @PostMapping("/new")
     public Post sharePost(@RequestBody PostDTO post) {
         Post p = new Post();
         modelMapper.map(post, p);
         return postRepo.save(p);
     }
 
-    @PatchMapping("/post/{id}")
+    @PatchMapping("/{id}")
     public Post updatePost(@PathVariable(value = "id") Long postId, @RequestBody PostDTO post) {
         Post p = postRepo.findById(postId).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found")

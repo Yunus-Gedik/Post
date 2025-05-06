@@ -12,7 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/comment")
 public class CommentController{
     private final CommentRepository commentRepo;
 
@@ -23,24 +23,24 @@ public class CommentController{
         this.commentRepo = commentRepo;
     }
 
-    @GetMapping("/post/{id}/comments")
+    @GetMapping("/post/{id}")
     public List<Comment> getComments(@PathVariable(value = "id") long postId) {
         return commentRepo.findByPostId(postId);
     }
 
-    @GetMapping("/comments")
+    @GetMapping("")
     public List<Comment> getCommentsByRequestParam(@RequestParam(value = "of", required = true) Long postId) {
         return commentRepo.findByPostId(postId);
     }
 
-    @PostMapping("/comment")
+    @PostMapping("/new")
     public Comment shareComment(@RequestBody CommentDTO comment) {
         Comment c = new Comment();
         modelMapper.map(comment, c);
         return commentRepo.save(c);
     }
 
-    @PatchMapping("/comment/{id}")
+    @PatchMapping("/{id}")
     public Comment updateComment(@PathVariable(value = "id") Long commentId, @RequestBody CommentDTO comment) {
         Comment c = commentRepo.findById(commentId).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment not found")
