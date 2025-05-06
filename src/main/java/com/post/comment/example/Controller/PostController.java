@@ -1,9 +1,7 @@
 package com.post.comment.example.Controller;
 
-import com.post.comment.example.Model.Comment;
-import com.post.comment.example.Model.CommentOptional;
 import com.post.comment.example.Model.Post;
-import com.post.comment.example.Model.PostOptional;
+import com.post.comment.example.Model.PostDTO;
 import com.post.comment.example.Repository.CommentRepository;
 import com.post.comment.example.Repository.PostRepository;
 import org.modelmapper.ModelMapper;
@@ -19,19 +17,17 @@ import java.util.Optional;
 @RestController
 class PostController {
     private final PostRepository postRepo;
-    private final CommentRepository commentRepo;
 
     @Autowired
     private ModelMapper modelMapper;
 
-    PostController(PostRepository repo, CommentRepository commentRepo) {
-        this.postRepo = repo;
-        this.commentRepo = commentRepo;
+    PostController(PostRepository repo) {
+        postRepo = repo;
     }
 
     @GetMapping("/posts")
     public List<Post> getPosts(@RequestParam(value = "of", required = false) Long userId) {
-        return this.postRepo.findByUserId(userId);
+        return postRepo.findByUserId(userId);
     }
 
     @GetMapping("/post")
@@ -44,48 +40,21 @@ class PostController {
         return postRepo.findById(postId);
     }
 
-    @GetMapping("/post/{id}/comments")
-    public List<Comment> getComments(@PathVariable(value = "id") long postId) {
-        return commentRepo.findByPostId(postId);
-    }
-
-    @GetMapping("/comments")
-    public List<Comment> getCommentsByRequestParam(@RequestParam(value = "of", required = true) Long postId) {
-        return commentRepo.findByPostId(postId);
-    }
-
-
     @PostMapping("/post")
-    public Post sharePost(@RequestBody Post post) {
-        return this.postRepo.save(post);
-    }
-
-    @PostMapping("/comment")
-    public Comment shareComment(@RequestBody Comment comment) {
-        return this.commentRepo.save(comment);
+    public Post sharePost(@RequestBody PostDTO post) {
+        Post p = new Post();
+        modelMapper.map(post, p);
+        return postRepo.save(p);
     }
 
     @PatchMapping("/post/{id}")
-    public Post updatePost(@PathVariable(value = "id") Long postId, @RequestBody PostOptional post) {
-        Post p = this.postRepo.findById(postId).orElseThrow(() ->
+    public Post updatePost(@PathVariable(value = "id") Long postId, @RequestBody PostDTO post) {
+        Post p = postRepo.findById(postId).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found")
         );
 
         modelMapper.map(post, p);
-        this.postRepo.save(p);
+        postRepo.save(p);
         return p;
     }
-
-    @PatchMapping("/comment/{id}")
-    public Comment updateComment(@PathVariable(value = "id") Long commentId, @RequestBody CommentOptional comment) {
-        Comment c = this.commentRepo.findById(commentId).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment not found")
-        );
-
-        modelMapper.map(comment, c);
-        this.commentRepo.save(c);
-        return null;
-    }
-
-
 }
