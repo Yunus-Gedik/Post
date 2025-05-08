@@ -1,9 +1,12 @@
 package com.post.comment.example.Model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
 @Embeddable
+@Setter
+@Getter
 public class Geo {
     String lat;
     String lng;

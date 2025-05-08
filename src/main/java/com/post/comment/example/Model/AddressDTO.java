@@ -5,6 +5,5 @@ public record AddressDTO(
         String suite,
         String city,
         String zipcode,
-        String lat,
-        String lng
+        GeoDTO geo
 ) { }

@@ -2,12 +2,14 @@ package com.post.comment.example.Model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 public class User {
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
@@ -17,7 +19,7 @@ public class User {
     String username;
     @NotEmpty
     String email;
-    
+
     String phone;
     String website;
 

@@ -10,7 +10,11 @@ public class ModelMapperConfig {
     @Bean
     public ModelMapper modelMapper() {
         ModelMapper m = new ModelMapper();
-        m.getConfiguration().setPropertyCondition(Conditions.isNotNull());
+        m.getConfiguration()
+                .setPropertyCondition(Conditions.isNotNull())
+                .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE)
+                .setPreferNestedProperties(false)
+                .setFieldMatchingEnabled(true);
         return m;
     }
 }

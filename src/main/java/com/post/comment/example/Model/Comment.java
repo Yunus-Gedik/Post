@@ -2,12 +2,14 @@ package com.post.comment.example.Model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 public class Comment {
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 

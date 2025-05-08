@@ -10,7 +10,7 @@ import com.post.comment.example.Model.Address;
 import java.util.List;
 
 @RestController
-@RequestMapping("/address")
+@RequestMapping("/api/address")
 public class AddressController {
 
     private final AddressRepository repo;
@@ -23,9 +23,10 @@ public class AddressController {
     }
 
     @PostMapping("/new")
-    public Address addNewAddress(@RequestParam(required = true) AddressDTO address) {
-        Address newAddress = new Address();
-        modelMapper.map(address, newAddress);
+    public Address addNewAddress(@RequestBody(required = true) AddressDTO address) {
+//        Address newAddress = new Address();
+//        modelMapper.map(address, newAddress);
+        Address newAddress = modelMapper.map(address, Address.class);
         return repo.save(newAddress);
     }
 

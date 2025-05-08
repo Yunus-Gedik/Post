@@ -4,12 +4,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.context.annotation.Primary;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 public class Post {
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
