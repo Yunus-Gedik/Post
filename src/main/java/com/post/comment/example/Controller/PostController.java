@@ -2,8 +2,10 @@ package com.post.comment.example.Controller;
 
 import com.post.comment.example.Model.Post;
 import com.post.comment.example.Model.PostDTO;
+import com.post.comment.example.Model.User;
 import com.post.comment.example.Repository.CommentRepository;
 import com.post.comment.example.Repository.PostRepository;
+import com.post.comment.example.Repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,12 +19,14 @@ import java.util.Optional;
 @RestController
 class PostController {
     private final PostRepository postRepo;
+    private final UserRepository userRepo;
 
     @Autowired
     private ModelMapper modelMapper;
 
-    PostController(PostRepository repo) {
-        postRepo = repo;
+    PostController(PostRepository postRepo, UserRepository userRepo) {
+        this.postRepo = postRepo;
+        this.userRepo = userRepo;
     }
 
     @GetMapping("/all")
@@ -43,7 +47,7 @@ class PostController {
     @PostMapping("/new")
     public Post sharePost(@RequestBody PostDTO post) {
         Post p = new Post();
-        modelMapper.map(post, p);
+        mapDTOtoPost(post, p);
         return postRepo.save(p);
     }
 
@@ -53,8 +57,20 @@ class PostController {
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found")
         );
 
-        modelMapper.map(post, p);
-        postRepo.save(p);
-        return p;
+        mapDTOtoPost(post, p);
+        return postRepo.save(p);
+    }
+
+    private void mapDTOtoPost(PostDTO dto, Post p) {
+        if (dto.title() != null) {
+            p.setTitle(dto.title());
+        }
+        if (dto.body() != null) {
+            p.setBody(dto.body());
+        }
+        if (dto.userId() != null) {
+            User u = userRepo.findById(dto.userId()).orElseThrow();
+            p.setUser(u);
+        }
     }
 }

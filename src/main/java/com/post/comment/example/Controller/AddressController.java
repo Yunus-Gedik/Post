@@ -24,8 +24,6 @@ public class AddressController {
 
     @PostMapping("/new")
     public Address addNewAddress(@RequestBody(required = true) AddressDTO address) {
-//        Address newAddress = new Address();
-//        modelMapper.map(address, newAddress);
         Address newAddress = modelMapper.map(address, Address.class);
         return repo.save(newAddress);
     }
@@ -34,5 +32,4 @@ public class AddressController {
     public List<Address> getAll(){
         return repo.findAll();
     }
-
 }

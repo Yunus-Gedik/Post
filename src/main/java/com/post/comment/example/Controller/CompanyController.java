@@ -23,9 +23,8 @@ public class CompanyController {
     }
 
     @PostMapping("/new")
-    public Company addNewAddress(@RequestParam(required = true) CompanyDTO company) {
-        Company newCompany = new Company();
-        mapper.map(company, newCompany);
+    public Company addNewAddress(@RequestBody(required = true) CompanyDTO company) {
+        Company newCompany = mapper.map(company, Company.class);
         return repo.save(newCompany);
     }
 
