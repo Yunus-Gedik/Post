@@ -12,13 +12,11 @@ import java.util.List;
 @Service
 public class CompanyService {
     private final CompanyRepository repo;
+    private final ModelMapper mapper;
 
-    @Autowired
-    ModelMapper mapper;
-
-    @Autowired
-    public CompanyService(CompanyRepository repo) {
+    public CompanyService(CompanyRepository repo, ModelMapper mapper) {
         this.repo = repo;
+        this.mapper = mapper;
     }
 
     public List<Company> getAllCompanies() {
