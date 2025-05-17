@@ -44,17 +44,17 @@ public class CommentService {
     }
 
     private void mapDTOtoComment(CommentDTO dto, Comment comment) {
-        if (dto.name() != null) {
-            comment.setName(dto.name());
+        if (dto.getName() != null) {
+            comment.setName(dto.getName());
         }
-        if (dto.email() != null) {
-            comment.setEmail(dto.email());
+        if (dto.getEmail() != null) {
+            comment.setEmail(dto.getEmail());
         }
-        if (dto.body() != null) {
-            comment.setBody(dto.body());
+        if (dto.getBody() != null) {
+            comment.setBody(dto.getBody());
         }
-        if (dto.postId() != null) {
-            Post post = postRepo.findById(dto.postId())
+        if (dto.getPostId() != null) {
+            Post post = postRepo.findById(dto.getPostId())
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found"));
             comment.setPost(post);
         }

@@ -50,14 +50,14 @@ public class PostService {
     }
 
     private void mapDTOtoPost(PostDTO dto, Post post) {
-        if (dto.title() != null) {
-            post.setTitle(dto.title());
+        if (dto.getTitle() != null) {
+            post.setTitle(dto.getTitle());
         }
-        if (dto.body() != null) {
-            post.setBody(dto.body());
+        if (dto.getBody() != null) {
+            post.setBody(dto.getBody());
         }
-        if (dto.userId() != null) {
-            User user = userRepo.findById(dto.userId())
+        if (dto.getUserId() != null) {
+            User user = userRepo.findById(dto.getUserId())
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
             post.setUser(user);
         }

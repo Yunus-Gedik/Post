@@ -7,7 +7,6 @@ import com.post.comment.example.Model.Company;
 import com.post.comment.example.Repository.UserRepository;
 import com.post.comment.example.Repository.AddressRepository;
 import com.post.comment.example.Repository.CompanyRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,9 +19,6 @@ public class UserService {
     private final UserRepository userRepo;
     private final AddressRepository addressRepo;
     private final CompanyRepository companyRepo;
-
-    @Autowired
-    private ModelMapper modelMapper;
 
     @Autowired
     public UserService(UserRepository userRepo, AddressRepository addressRepo, CompanyRepository companyRepo) {
@@ -54,28 +50,28 @@ public class UserService {
     }
 
     private void mapDTOtoUser(UserDTO dto, User user) {
-        if (dto.name() != null) {
-            user.setName(dto.name());
+        if (dto.getName() != null) {
+            user.setName(dto.getName());
         }
-        if (dto.username() != null) {
-            user.setUsername(dto.username());
+        if (dto.getUsername() != null) {
+            user.setUsername(dto.getUsername());
         }
-        if (dto.email() != null) {
-            user.setEmail(dto.email());
+        if (dto.getEmail() != null) {
+            user.setEmail(dto.getEmail());
         }
-        if (dto.phone() != null) {
-            user.setPhone(dto.phone());
+        if (dto.getPhone() != null) {
+            user.setPhone(dto.getPhone());
         }
-        if (dto.website() != null) {
-            user.setWebsite(dto.website());
+        if (dto.getWebsite() != null) {
+            user.setWebsite(dto.getWebsite());
         }
-        if (dto.addressId() != null) {
-            Address address = addressRepo.findById(dto.addressId())
+        if (dto.getAddressId() != null) {
+            Address address = addressRepo.findById(dto.getAddressId())
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Address not found"));
             user.setAddress(address);
         }
-        if (dto.companyId() != null) {
-            Company company = companyRepo.findById(dto.companyId())
+        if (dto.getCompanyId() != null) {
+            Company company = companyRepo.findById(dto.getCompanyId())
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Company not found"));
             user.setCompany(company);
         }
