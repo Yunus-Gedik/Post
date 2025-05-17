@@ -4,7 +4,6 @@ import com.post.comment.example.Model.Address;
 import com.post.comment.example.Model.AddressDTO;
 import com.post.comment.example.Repository.AddressRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,16 +11,15 @@ import java.util.List;
 @Service
 public class AddressService {
     private final AddressRepository repo;
+    private final ModelMapper mapper;
 
-    @Autowired
-    ModelMapper modelMapper;
-
-    public AddressService(AddressRepository repo) {
+    public AddressService(AddressRepository repo, ModelMapper mapper) {
         this.repo = repo;
+        this.mapper = mapper;
     }
 
     public Address newAddress(AddressDTO address) {
-        Address newAddress = modelMapper.map(address, Address.class);
+        Address newAddress = mapper.map(address, Address.class);
         return repo.save(newAddress);
     }
 
