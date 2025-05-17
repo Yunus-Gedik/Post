@@ -1,7 +1,6 @@
 package com.post.comment.example.Service;
 
 import com.post.comment.example.Helper.ModelMapperConfig;
-import com.post.comment.example.Model.CompanyDTO;
 import com.post.comment.example.Services.CompanyService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,13 +8,10 @@ import org.junit.jupiter.api.Test;
 import com.post.comment.example.Model.Company;
 import com.post.comment.example.Repository.CompanyRepository;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
