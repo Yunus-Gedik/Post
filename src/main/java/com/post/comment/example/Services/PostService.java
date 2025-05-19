@@ -5,7 +5,6 @@ import com.post.comment.example.Model.PostDTO;
 import com.post.comment.example.Model.User;
 import com.post.comment.example.Repository.PostRepository;
 import com.post.comment.example.Repository.UserRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,10 +18,6 @@ public class PostService {
     private final PostRepository postRepo;
     private final UserRepository userRepo;
 
-    @Autowired
-    private ModelMapper modelMapper;
-
-    @Autowired
     public PostService(PostRepository postRepo, UserRepository userRepo) {
         this.postRepo = postRepo;
         this.userRepo = userRepo;
