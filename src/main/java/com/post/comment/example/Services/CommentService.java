@@ -5,8 +5,6 @@ import com.post.comment.example.Model.CommentDTO;
 import com.post.comment.example.Model.Post;
 import com.post.comment.example.Repository.CommentRepository;
 import com.post.comment.example.Repository.PostRepository;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -17,9 +15,6 @@ import java.util.List;
 public class CommentService {
     private final CommentRepository commentRepo;
     private final PostRepository postRepo;
-
-    @Autowired
-    private ModelMapper mapper;
 
     public CommentService(CommentRepository commentRepo, PostRepository postRepo) {
         this.commentRepo = commentRepo;
